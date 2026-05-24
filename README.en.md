@@ -15,18 +15,9 @@ steps:
   - uses: nnahito/env-replacer@main
     with:
       secrets: ${{ toJSON(secrets) }}
-```
-
-To copy from `.env.example` before replacing:
-
-```yaml
-steps:
-  - uses: actions/checkout@v4
-
-  - uses: nnahito/env-replacer@main
-    with:
-      secrets: ${{ toJSON(secrets) }}
-      copy-from-example: 'true'
+      copy-from-example: 'true' # ← optional: copy .env.example to .env before replacing. true or false. Default is false
+      env-file: 'subdir/.env'  # ← optional: path to .env if outside the working directory. Default is .env
+      env-example: '.env.example' # ← optional: path to .env.example if outside the working directory. Default is .env.example
 ```
 
 ## Switching values per environment (prod / stage, etc.)

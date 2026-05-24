@@ -8,16 +8,7 @@ GitHub Actions の Secrets で `.env` ファイルの値を置換する Composit
 
 ## 使い方
 
-```yaml
-steps:
-  - uses: actions/checkout@v4
-
-  - uses: nnahito/env-replacer@main
-    with:
-      secrets: ${{ toJSON(secrets) }}
-```
-
-`.env.example` からコピーして置換する場合：
+基本：
 
 ```yaml
 steps:
@@ -26,7 +17,9 @@ steps:
   - uses: nnahito/env-replacer@main
     with:
       secrets: ${{ toJSON(secrets) }}
-      copy-from-example: 'true'
+      copy-from-example: 'true' # ← 任意: .envファイルを.env.exampleから利用するかどうか。true or falseを指定する。デフォルトはfalse
+      env-file: 'subdir/.env'  # ← 任意: .envが実行ディレクトリ外にある場合に指定。省略時は.envがデフォルト値
+      env-example: '.env.example' # ← 任意: .env.exampleが実行ディレクトリ外にある場合に指定。省略時は.env.exampleがデフォルト値
 ```
 
 ## 環境ごとに値を切り替える（prod / stage など）
@@ -60,7 +53,7 @@ stage Environment Secrets
 ```yaml
 jobs:
   deploy:
-    environment: ${{ github.event.inputs.target }}  # "prod" or "stage"
+    environment: ${{ github.event.inputs.target }}
     steps:
       - uses: actions/checkout@v4
 
