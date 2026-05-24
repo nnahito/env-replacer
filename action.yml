@@ -1,18 +1,18 @@
 name: 'Laravel .env Secret Replacer'
-description: 'Replaces .env values with GitHub Secrets for keys that exist in .env'
+description: '.env に存在するキーを対象に、GitHub Secrets の値で置換する'
 
 inputs:
   secrets:
-    description: 'All secrets as JSON. Pass ${{ toJSON(secrets) }}'
+    description: 'すべての Secrets を JSON で渡す。${{ toJSON(secrets) }} を使用'
     required: true
   env-file:
-    description: 'Path to the target .env file'
+    description: '対象の .env ファイルのパス'
     default: '.env'
   env-example:
-    description: 'Path to .env.example (required when copy-from-example is true)'
+    description: '.env.example のパス（copy-from-example が true の場合に使用）'
     default: '.env.example'
   copy-from-example:
-    description: 'Copy .env.example to .env before replacing values (true/false)'
+    description: '置換前に .env.example を .env としてコピーする（true/false）'
     default: 'false'
 
 runs:
