@@ -1,5 +1,5 @@
-name: 'Laravel .env Secret Replacer'
-description: '.env に存在するキーを対象に、GitHub Secrets の値で置換する'
+name: '.env Secret Replacer'
+description: 'Populate your .env file with GitHub Secrets. Only replaces keys that already exist — no accidental leaks.'
 
 inputs:
   secrets:
