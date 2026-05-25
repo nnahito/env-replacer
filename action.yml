@@ -15,6 +15,10 @@ inputs:
     description: '置換前に .env.example を .env としてコピーする（true/false）'
     default: 'false'
 
+branding:
+  icon: lock
+  color: green
+
 runs:
   using: 'composite'
   steps:
