@@ -17,30 +17,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 最新タグを取得
-        id: latest_tag
-        run: |
-          git fetch --tags
-          LATEST=$(git tag --list 'v*' --sort=-version:refname | head -n 1)
-          if [ -z "$LATEST" ]; then
-            LATEST="v0.0.0"
-          fi
-          echo "tag=$LATEST" >> "$GITHUB_OUTPUT"
-
-      - name: パッチバージョンをインクリメント
-        id: next_tag
-        run: |
-          LATEST="${{ steps.latest_tag.outputs.tag }}"
-          VERSION="${LATEST#v}"
-          MAJOR=$(echo "$VERSION" | cut -d. -f1)
-          MINOR=$(echo "$VERSION" | cut -d. -f2)
-          PATCH=$(echo "$VERSION" | cut -d. -f3)
-          NEXT="v${MAJOR}.${MINOR}.$((PATCH + 1))"
-          echo "tag=$NEXT" >> "$GITHUB_OUTPUT"
-
-      - name: タグを作成してプッシュ
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag "${{ steps.next_tag.outputs.tag }}"
-          git push origin "${{ steps.next_tag.outputs.tag }}"
+      - name: 自動タグ発行
+        uses: anothrNick/github-tag-action@1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          WITH_V: true
